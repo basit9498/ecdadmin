@@ -9,7 +9,7 @@ const Aside = () => {
       <div className="">
         <ul>
           <Link
-            to="/"
+            to="/dashboard"
             className="flex flex-col items-center border-b border-white pb-8 mb-9"
           >
             <span className="text-sm text-white font-medium mb-2">

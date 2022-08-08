@@ -59,7 +59,7 @@ const Index = () => {
                             <Button
                                 // onClick={(e) => loginUser(e)}
                                 text="Login"
-                                className="w-full bg-primary text-secondry mt-11 rounded-md"
+                                className="w-full h-[50px] bg-primary text-secondry mt-11 rounded-md"
                             />
                             <button className="flex justify-center items-center h-[50px] w-full border-2 mt-6 rounded-md">
                                 <img src={Google} alt="" />

@@ -1,3 +1,11 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+
+@layer components {
+    .input_felid {
+        @apply w-full h-12 transition-all pl-2 border;
+    }
+}

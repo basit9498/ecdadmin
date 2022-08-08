@@ -5,7 +5,8 @@ import {
     Route,
 } from "react-router-dom"
 import Login from '../pages/Login'
-import Home from '../pages/Home'
+import Supplier from '../pages/supplier'
+import SupplierView from "../pages/supplier_view"
 
 const Index = () => {
     return (
@@ -13,7 +14,8 @@ const Index = () => {
             <BrowserRouter>
                 <Routes>
                     <Route path="/" element={<Login />} />
-                    <Route path="/dashboard" element={<Home />} />
+                    <Route path="/dashboard" element={<Supplier />} />
+                    <Route path="/supplier_view" element={<SupplierView />} />
                 </Routes>
             </BrowserRouter>
 

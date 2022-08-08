@@ -10,9 +10,9 @@ const Header = () => {
   const nag = useNavigate();
   return (
     <>
-      <header className="border-b shadow py-4 ">
-        <section className="container mx-auto flex justify-between items-center ">
-          <img src={Logo} alt="" className="w-20" />
+      <header className="border-b shadow h-16">
+        <section className="container mx-auto h-full flex justify-between items-center ">
+          <img src={Logo} alt="" className="w-12" />
           <div className="flex items-center">
             <div className="relative mr-10">
               <img src={Bell} />

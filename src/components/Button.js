@@ -1,9 +1,9 @@
 import React from "react";
 
-const Button = ({ text, className, img, onClick }) => {
+const Button = ({ text, className, img, onClick, imgClass }) => {
     return (
-        <button className={`${className} h-[50px]`} onClick={onClick}>
-            <img src={img} /> <span>{text}</span>
+        <button className={`${className} `} onClick={onClick}>
+            <img src={img} className={imgClass} /> <span>{text}</span>
         </button>
     );
 };

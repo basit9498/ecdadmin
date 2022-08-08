@@ -4,7 +4,9 @@ button,
 textarea {
   outline: none !important;
 }
-
+select{
+  appearance: none;
+}
 /* Check box*/
 .check__box {
   input {
@@ -28,9 +30,53 @@ textarea {
 }
 
 .organization__table {
-  border-spacing: 0 20px;
+  border-spacing: 0 15px;
 }
 
 .boxShadow {
   box-shadow: 0 0px 4px #ccc;
+}
+
+// ==================muti Select drop down==================
+.css-1s2u09g-control {
+  background-color: transparent !important;
+  border-width: 0px !important;
+  border-color: transparent !important;
+  border-style: none !important;
+  height: 100% !important;
+}
+
+
+
+.css-1pahdxg-control {
+  background-color: transparent !important;
+  box-shadow: none !important;
+  background-color: transparent !important;
+  border-width: 0px !important;
+  border-color: transparent !important;
+  border-style: none !important;
+  height: 100% !important;
+
+  &:hover {
+      border: none !important;
+      border-color: transparent !important;
+  }
+
+}
+
+.css-b62m3t-container {
+  height: 100% !important;
+}
+
+.css-26l3qy-menu {
+  border-radius: 0px !important;
+
+  .css-1n7v3ny-option {
+      background-color: $primary;
+      color: #fff;
+  }
+
+  // .css-9gakcf-option {
+  //     background-color: $primaryHover;
+  // }
 }
