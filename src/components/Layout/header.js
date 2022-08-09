@@ -1,13 +1,20 @@
-import { Fragment } from "react";
+import { Fragment, useEffect } from "react";
 import { Menu, Transition } from "@headlessui/react";
 import Logo from "../../assets/img/logo.svg";
 import Bell from "../../assets/img/bell.svg";
 import { Link, useNavigate } from "react-router-dom";
 import User from "../../assets/img/user2.png";
 import Down from "../../assets/img/down.svg";
+import { useDispatch, useSelector } from "react-redux";
+import { userLogout } from "../../store/action/auth.action";
 
 const Header = () => {
-  const nag = useNavigate();
+  const dispatch = useDispatch();
+  const { isAuthenticated } = useSelector((state) => state.auth);
+  const navigation = useNavigate();
+  useEffect(() => {
+    !isAuthenticated && navigation("/login");
+  }, [isAuthenticated]);
   return (
     <>
       <header className="border-b shadow h-16">
@@ -60,7 +67,8 @@ const Header = () => {
                         </Link>
                         <button
                           onClick={() => {
-                            nag("/");
+                            // nag("/");
+                            dispatch(userLogout());
                           }}
                           className="block py-2 px-2.5 text-sm font-medium transition-all duration-300 text-darkblue hover:text-secondry hover:bg-darkblue"
                         >
