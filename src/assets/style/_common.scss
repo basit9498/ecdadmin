@@ -1,0 +1,82 @@
+input,
+select,
+button,
+textarea {
+  outline: none !important;
+}
+select{
+  appearance: none;
+}
+/* Check box*/
+.check__box {
+  input {
+    display: none;
+
+    &:checked+i {
+      background-color: $primary;
+      background-image: url(../img/check.svg);
+    }
+  }
+
+  i {
+    transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    border: 1px solid $primary;
+    background-repeat: no-repeat;
+    background-position: 3px 4px;
+    display: inline-block;
+    height: 20px;
+    width: 20px;
+  }
+}
+
+.organization__table {
+  border-spacing: 0 15px;
+}
+
+.boxShadow {
+  box-shadow: 0 0px 4px #ccc;
+}
+
+// ==================muti Select drop down==================
+.css-1s2u09g-control {
+  background-color: transparent !important;
+  border-width: 0px !important;
+  border-color: transparent !important;
+  border-style: none !important;
+  height: 100% !important;
+}
+
+
+
+.css-1pahdxg-control {
+  background-color: transparent !important;
+  box-shadow: none !important;
+  background-color: transparent !important;
+  border-width: 0px !important;
+  border-color: transparent !important;
+  border-style: none !important;
+  height: 100% !important;
+
+  &:hover {
+      border: none !important;
+      border-color: transparent !important;
+  }
+
+}
+
+.css-b62m3t-container {
+  height: 100% !important;
+}
+
+.css-26l3qy-menu {
+  border-radius: 0px !important;
+
+  .css-1n7v3ny-option {
+      background-color: $primary;
+      color: #fff;
+  }
+
+  // .css-9gakcf-option {
+  //     background-color: $primaryHover;
+  // }
+}

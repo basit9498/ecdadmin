@@ -1,0 +1,51 @@
+body,
+.scroll__bar {
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: $secondry;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: $primary;
+  }
+}
+
+/* login stying */
+.login__banner {
+  background: url(../img/loginbg.png);
+  background-position: 0px -250px;
+  position: relative;
+
+  &::before {
+    background-color: rgba(6, 29, 60, 0.6);
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    content: "";
+    left: 0;
+    top: 0;
+  }
+}
+
+/*add__organization modal*/
+.add__organization {
+  background-color: rgba(6, 29, 60, 0.63);
+  position: fixed;
+  height: 100vh;
+  width: 100%;
+  left: 0;
+  top: 0;
+}
+
+.show__modal {
+  transition: all 0.4s cubic-bezier(0.39, 0.575, 0.565, 1);
+  transform: translateX(0%);
+}
+
+.hide__modal {
+  transition: all 0.4s cubic-bezier(0.39, 0.575, 0.565, 1);
+  transform: translateX(100%);
+}
