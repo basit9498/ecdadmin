@@ -9,6 +9,7 @@ import ModalBox from '../../components/ModalBox'
 import Loader from "./Loader/loader";
 import Product from "./Product/product";
 import Order from "./Order/order";
+import { useSelector } from "react-redux";
 
 
 const Index = () => {
@@ -16,12 +17,15 @@ const Index = () => {
     const [openLoaderModal, setOpenLoaderModal] = useState(false)
     const [ProductModal, setProductModal] = useState(false)
 
+    const { supplierId } = useSelector((state) => state.supplier)
+    // console.log(supplierId)
+
     return (
         <>
 
             <Layout>
                 <section className="flex justify-between items-center">
-                    <Heading text='Supplier Name' />
+                    <Heading text={supplierId?.supplierName} />
 
                     {tabs === 'loader' && <Button
                         onClick={() => setOpenLoaderModal(true)}
