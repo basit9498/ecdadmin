@@ -11,8 +11,10 @@ import AddSuppier from "./AddSuppier";
 import GoogleMap from "./GoogleMap";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  deleteSuppier,
   getAllSupplier,
   setSupplierId,
+  supplierClearMessages,
 } from "../../store/action/supplier.action";
 
 const Index = () => {
@@ -20,7 +22,9 @@ const Index = () => {
   const dispatch = useDispatch();
   const [supplier, setSupplier] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
-  const { isLoading, supplierList } = useSelector((state) => state.supplier);
+  const { isLoading, supplierList, supplierSuccessMessage } = useSelector(
+    (state) => state.supplier
+  );
   useEffect(() => {
     dispatch(getAllSupplier());
   }, []);
@@ -28,7 +32,12 @@ const Index = () => {
   useEffect(() => {
     setSupplier(supplierList);
   }, [supplierList]);
-
+  useEffect(() => {
+    if (supplierSuccessMessage == "SUPPLIER_DEL_SCCCESS") {
+      dispatch(getAllSupplier());
+      dispatch(supplierClearMessages());
+    }
+  }, [supplierSuccessMessage]);
   return (
     <>
       {/* ==============Add supplier Modal=========== */}
@@ -41,7 +50,7 @@ const Index = () => {
             onClick={() => {
               setModalOpen(true);
             }}
-            className="py-3 px-4 bg-primary text-secondry  rounded-md"
+            className="py-3 px-4 bg-primary text-white  rounded-md"
           />
         </section>
         <section className="mt-5">
@@ -103,6 +112,9 @@ const Index = () => {
                                 <Button
                                   text="Delete"
                                   className="block w-full text-left py-1.5 px-2.5 text-sm font-medium transition-all duration-300 text-litegray hover:text-secondry hover:bg-darkblue"
+                                  onClick={() => {
+                                    dispatch(deleteSuppier(data?._id));
+                                  }}
                                 />
                               </Menu.Item>
                             </div>

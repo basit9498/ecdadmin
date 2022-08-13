@@ -7,7 +7,11 @@ import {
   SUPPLIER_SET_ID,
   SUPPLIER_ADD_REQUEST,
   SUPPLIER_ADD_SUCCESS,
-  SUPPLIER_ADD_FAIL
+  SUPPLIER_ADD_FAIL,
+  SUPPLIER_DEL_REQUEST,
+  SUPPLIER_DEL_SCCCESS,
+  SUPPLIER_DEL_FAIL,
+  SUPPLIER_CLEAR_MESSAGES,
 } from "../constant";
 
 export const getAllSupplier = () => async (dispatch) => {
@@ -37,34 +41,51 @@ export const getAllSupplier = () => async (dispatch) => {
   }
 };
 
-
-
 export const supplierAdd = (data) => async (dispatch) => {
   dispatch({
     type: SUPPLIER_ADD_REQUEST,
   });
   try {
-    const response = await supplierService.addSuppier(data)
+    const response = await supplierService.addSuppier(data);
     if (response.data) {
       dispatch({
         type: SUPPLIER_ADD_SUCCESS,
         payload: response.data?.supplier,
-      })
+      });
     } else {
       dispatch({
         type: SUPPLIER_ADD_FAIL,
-      })
+      });
     }
   } catch (error) {
     dispatch({
       type: SUPPLIER_ADD_FAIL,
       payload: error,
-    })
+    });
   }
-}
+};
 
-
-
+export const deleteSuppier = (id) => async (dispatch) => {
+  dispatch({
+    type: SUPPLIER_DEL_REQUEST,
+  });
+  try {
+    const response = await supplierService.deleteSuppier(id);
+    if (response?.data) {
+      dispatch({
+        type: SUPPLIER_DEL_SCCCESS,
+      });
+    } else {
+      dispatch({
+        type: SUPPLIER_DEL_FAIL,
+      });
+    }
+  } catch (error) {
+    dispatch({
+      type: SUPPLIER_DEL_FAIL,
+    });
+  }
+};
 
 export const setSupplierId = (id) => {
   return {
@@ -75,5 +96,11 @@ export const setSupplierId = (id) => {
 export const removeSupplierId = () => {
   return {
     type: SUPPLIER_REMOVE_ID,
+  };
+};
+
+export const supplierClearMessages = () => {
+  return {
+    type: SUPPLIER_CLEAR_MESSAGES,
   };
 };
