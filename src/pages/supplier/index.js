@@ -86,8 +86,8 @@ const Index = () => {
                               <Menu.Item>
                                 <Button
                                   onClick={() => {
-                                    dispatch(setSupplierId(data._id));
-                                    // navigate("/supplierview");
+                                    dispatch(setSupplierId(data));
+                                    navigate("/supplierview");
                                   }}
                                   text="View"
                                   className="block w-full text-left py-1.5 px-2.5 text-sm font-medium transition-all duration-300 text-litegray hover:text-secondry hover:bg-darkblue"

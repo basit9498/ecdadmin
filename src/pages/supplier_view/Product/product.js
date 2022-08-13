@@ -1,10 +1,22 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import Button from '../../../components/Button'
 import { Menu, Transition } from "@headlessui/react";
 import Dots from "../../../assets/img/dots.svg";
 import AddProduct from "./AddProduct";
+import { useDispatch, useSelector } from "react-redux";
+import { getSupplierProduct } from "../../../store/action/supplierProduct.action";
 
 const Product = ({ modalOpen, modalHide }) => {
+    const dispatch = useDispatch()
+    const state = useSelector((state) => state.supplier)
+    const supplierProduct = useSelector((state) => state.supplierProduct)
+
+    const { supplierProducts } = supplierProduct?.supplierProductList;
+    console.log('s', supplierProducts)
+
+    useEffect(() => {
+        dispatch(getSupplierProduct(state.supplierId._id))
+    }, [])
     return (
         <>
             <AddProduct openModal={modalOpen} hideModal={modalHide} />
@@ -16,16 +28,25 @@ const Product = ({ modalOpen, modalHide }) => {
                         <th>Product Name</th>
                         <th>Qauntity</th>
                         <th>Stock</th>
+                        <th>category</th>
+                        <th>Price</th>
                         <th className=' pr-5'>Action</th>
                     </thead>
                     <tbody>
-                        {[1, 2, 3, 4, 5, 6].map(() => {
+                        {supplierProducts?.map((ele, index) => {
                             return (
                                 <tr className='rounded-md text-center boxShadow'>
-                                    <td className=' py-3'>03</td>
-                                    <td className=' py-3'>Product</td>
+                                    <td className=' py-3'>{index + 1}</td>
+                                    <td className=' py-3 flex flex-col   items-center gap-x-3'>
+                                        <img src={ele?.images[0].url} alt='' className="h-10 w-10 object-cover" />
+                                        <span>
+                                            {ele?.name}
+                                        </span>
+                                    </td>
                                     <td className=' py-3'>Qauntity</td>
-                                    <td className=' py-3'>3</td>
+                                    <td className=' py-3'>{ele?.Stock}</td>
+                                    <td className=' py-3'>{ele?.category}</td>
+                                    <td className=' py-3'>{ele?.price}</td>
                                     <td className=' py-3'>
                                         <Menu as="div" className="relative inline-block text-left ">
                                             <div>

@@ -5,6 +5,9 @@ import {
   SUPPLIER_GET_ALL_LIST_SUCCESS,
   SUPPLIER_REMOVE_ID,
   SUPPLIER_SET_ID,
+  SUPPLIER_ADD_REQUEST,
+  SUPPLIER_ADD_SUCCESS,
+  SUPPLIER_ADD_FAIL
 } from "../constant";
 
 export const getAllSupplier = () => async (dispatch) => {
@@ -33,6 +36,35 @@ export const getAllSupplier = () => async (dispatch) => {
     });
   }
 };
+
+
+
+export const supplierAdd = (data) => async (dispatch) => {
+  dispatch({
+    type: SUPPLIER_ADD_REQUEST,
+  });
+  try {
+    const response = await supplierService.addSuppier(data)
+    if (response.data) {
+      dispatch({
+        type: SUPPLIER_ADD_SUCCESS,
+        payload: response.data?.supplier,
+      })
+    } else {
+      dispatch({
+        type: SUPPLIER_ADD_FAIL,
+      })
+    }
+  } catch (error) {
+    dispatch({
+      type: SUPPLIER_ADD_FAIL,
+      payload: error,
+    })
+  }
+}
+
+
+
 
 export const setSupplierId = (id) => {
   return {

@@ -226,7 +226,7 @@ const Index = () => {
                   <Button
                     onClick={handleSubmit}
                     text="Login"
-                    className="w-full bg-primary text-secondry mt-11 rounded-md"
+                    className="w-full bg-primary h-[50px] text-secondry mt-11 rounded-md"
                   />
                 </form>
               )}

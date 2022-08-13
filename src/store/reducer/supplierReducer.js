@@ -4,6 +4,9 @@ import {
   SUPPLIER_GET_ALL_LIST_SUCCESS,
   SUPPLIER_REMOVE_ID,
   SUPPLIER_SET_ID,
+  SUPPLIER_ADD_REQUEST,
+  SUPPLIER_ADD_SUCCESS,
+  SUPPLIER_ADD_FAIL
 } from "../constant";
 
 const initalState = {
@@ -11,6 +14,7 @@ const initalState = {
   supplierList: [],
   supplierErrorMessage: null,
   supplierId: null,
+  data: null,
 };
 
 const supplierReducer = (state = initalState, action) => {
@@ -36,6 +40,30 @@ const supplierReducer = (state = initalState, action) => {
         supplierList: null,
         supplierErrorMessage: action.payload,
       };
+
+    case SUPPLIER_ADD_REQUEST:
+      return {
+        ...state,
+        isloading: true,
+        data: null,
+        supplierErrorMessage: null
+      }
+    case SUPPLIER_ADD_SUCCESS:
+      return {
+        ...state,
+        isloading: false,
+        data: action.payload,
+        supplierList: [...state.supplierList, action.payload]
+
+      }
+    case SUPPLIER_ADD_FAIL:
+      return {
+        ...state,
+        isloading: false,
+        supplierErrorMessage: action.payload,
+      }
+
+
     case SUPPLIER_SET_ID:
       return {
         ...state,
