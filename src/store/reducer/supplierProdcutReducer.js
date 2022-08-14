@@ -32,7 +32,7 @@ const supplierProdcutReducer = (state = initalState, action) => {
         isloading: false,
         successMessage: "action.successMessage",
         errorMessage: null,
-        supplierProductList: "[...action.payload]",
+        supplierProductList: [...state.supplierProductList],
       };
     case SUPPLIER_PRODUCT_ADD_FAIL:
       return {
