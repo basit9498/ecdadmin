@@ -125,7 +125,7 @@ const AddProduct = ({ openModal, hideModal, callBack }) => {
                                             let file = event.target.files[0]
                                             getBase64(file).then(data => {
 
-                                                setFileData(data)
+                                                let fileData = data
 
                                             }).catch(error => {
                                                 console.log(error)
