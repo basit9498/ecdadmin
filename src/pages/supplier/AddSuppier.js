@@ -19,6 +19,7 @@ const AddSuppier = ({ modalOpen, modalHide }) => {
     const [locationLat, setLocationLat] = useState('')
     const [locationLng, setLocationLng] = useState('')
     const [description, setDescription] = useState('')
+    const [addPayment, setAddPayment] = useState([])
 
     const categoryList = [
         { label: 'Industrial services', value: "industrial services", },
@@ -49,9 +50,15 @@ const AddSuppier = ({ modalOpen, modalHide }) => {
         }
         console.log(payload)
         dispatch(supplierAdd(payload))
-
     }
-    // console.log(errorMessage)
+
+    const addPaymentMethod = () => {
+        setAddPayment([...addPayment, {
+            BankName: '',
+            transaction: '',
+        }])
+    }
+
 
     return (
         <>
@@ -87,6 +94,35 @@ const AddSuppier = ({ modalOpen, modalHide }) => {
                     <div className=' w-[300px] mb-4'>
                         <input type='text' value={city} onChange={(e) => setCity(e.target.value)} className='h-11 border text-sm w-full pl-2' placeholder='City' />
                     </div>
+                    <div className='w-full mb-4'>
+                        <section className=' flex justify-between items-center' >
+                            <div className=' w-[170px] '>
+                                <input type='text'
+                                    className='h-11 border text-sm w-full pl-2' onChange={(e) => setAddPayment([addPayment, {
+                                        BankName: e.target.value
+                                    }])} placeholder='Bank' />
+                            </div>
+                            <div className=' w-[300px]'>
+                                <input type='text' className='h-11 border text-sm w-full pl-2' placeholder='Transaction No' />
+                            </div>
+                            <span
+                                onClick={() => addPaymentMethod()}
+                                className='inline-flex bg-primary text-white h-10 w-32 justify-center items-center'
+                                role='button'>Add Payment</span>
+                        </section>
+                        {addPayment.map((item, index) => {
+                            return (
+                                <p>{item.BankName}</p>
+                            )
+                        })
+                        }
+                    </div>
+                    {/* <div className='w-full mb-4'>
+                        <span
+                            onClick={() => addPaymentMethod()}
+                            className='inline-flex bg-primary text-white h-10 w-36 justify-center items-center'
+                            role='button'>Add Payment</span>
+                    </div> */}
                     {/* <div className=' w-[300px] mb-4'>
                         <input type='text' value={address} onChange={(e)=> setadd} className='h-11 border text-sm w-full pl-2' placeholder='Address' />
                     </div> */}
