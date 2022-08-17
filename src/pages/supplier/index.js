@@ -16,6 +16,7 @@ import {
   setSupplierId,
   supplierClearMessages,
 } from "../../store/action/supplier.action";
+import { getAllLoader } from "../../store/action/supplierLoader.action";
 
 const Index = () => {
   let navigate = useNavigate();
@@ -27,6 +28,7 @@ const Index = () => {
   );
   useEffect(() => {
     dispatch(getAllSupplier());
+    dispatch(getAllLoader());
   }, []);
 
   useEffect(() => {
