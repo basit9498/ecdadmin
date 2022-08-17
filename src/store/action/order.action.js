@@ -4,6 +4,7 @@ import {
   ORDER_SUPPLIER_GET_FAIL,
   ORDER_SUPPLIER_GET_REQUEST,
   ORDER_SUPPLIER_GET_SCCUESS,
+  ORDER_SUPPLIER_LOADER_ASSIGN_SET,
 } from "../constant";
 
 export const getOrderSupplier = (id) => async (dispatch) => {
@@ -36,4 +37,16 @@ export const clearOrderMessage = () => {
   return {
     type: ORDER_CLEAR_MESSAGES,
   };
+};
+
+export const loaderAssignRedxSetData = (data) => {
+  return {
+    type: ORDER_SUPPLIER_LOADER_ASSIGN_SET,
+    payload: data,
+  };
+};
+
+export const setOrderLoaderPick = (data) => async (dispatch) => {
+  const response = await orderService.setOrderLoaderPick(data);
+  // console.log("response", response);
 };

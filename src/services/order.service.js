@@ -8,6 +8,13 @@ const getOrderSupplier = (id) => {
     .catch((err) => err);
 };
 
+const setOrderLoaderPick = (orderLoaderData) => {
+  return httpService
+    .post(`/order_loader/set_pick`, orderLoaderData)
+    .then((data) => data)
+    .catch((err) => err);
+};
 export default {
   getOrderSupplier,
+  setOrderLoaderPick,
 };
