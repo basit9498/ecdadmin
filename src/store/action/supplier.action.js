@@ -104,3 +104,7 @@ export const supplierClearMessages = () => {
     type: SUPPLIER_CLEAR_MESSAGES,
   };
 };
+
+export const updateSupplier = async (id, data) => {
+  await supplierService.updateSupplier(id, data);
+};

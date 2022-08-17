@@ -18,8 +18,14 @@ const deleteSuppier = (id) =>
     .then((data) => data)
     .catch((error) => error);
 
+const updateSupplier = (id, data) =>
+  httpServices
+    .put(`/update/${id}`, data)
+    .then((data) => data)
+    .catch((error) => error);
 export default {
   getAllSupplier,
   addSuppier,
   deleteSuppier,
+  updateSupplier,
 };

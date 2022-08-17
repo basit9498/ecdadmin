@@ -1,7 +1,7 @@
 import axios from "axios";
 // import { BASE_URL } from '@env';
-// const baseURL = "http://localhost:5000/api/v1/";
-const baseURL = "https://dev-ecd-api-v1.herokuapp.com/api/v1/";
+const baseURL = "http://localhost:5000/api/v1/";
+// const baseURL = "https://dev-ecd-api-v1.herokuapp.com/api/v1/";
 
 const http = axios.create({
   baseURL: `${baseURL}`,

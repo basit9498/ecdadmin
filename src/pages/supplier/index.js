@@ -22,6 +22,10 @@ const Index = () => {
   let navigate = useNavigate();
   const dispatch = useDispatch();
   const [supplier, setSupplier] = useState([]);
+  const [editMode, setEditMode] = useState({
+    status: false,
+    id: null,
+  });
   const [modalOpen, setModalOpen] = useState(false);
   const { isLoading, supplierList, supplierSuccessMessage } = useSelector(
     (state) => state.supplier
@@ -43,7 +47,12 @@ const Index = () => {
   return (
     <>
       {/* ==============Add supplier Modal=========== */}
-      <AddSuppier modalOpen={modalOpen} modalHide={setModalOpen} />
+      <AddSuppier
+        modalOpen={modalOpen}
+        modalHide={setModalOpen}
+        editMode={editMode}
+        setEditMode={setEditMode}
+      />
       <Layout>
         <section className=" flex items-center justify-between">
           <Heading text="Supplier List" />
@@ -60,7 +69,7 @@ const Index = () => {
             <thead>
               <th className=" pl-5">S.No</th>
               <th>Supplier</th>
-              <th>Address</th>
+              <th>Area</th>
               <th className=" pr-5">Action</th>
             </thead>
             <tbody>
@@ -68,10 +77,8 @@ const Index = () => {
                 return (
                   <tr className="rounded-md text-center boxShadow">
                     <td className=" py-3">{index + 1}</td>
-                    <td className=" py-3">{data.supplierName}</td>
-                    <td className=" py-3">
-                      {data.address + data.city + data.country}
-                    </td>
+                    <td className=" py-3">{data?.supplierName}</td>
+                    <td className=" py-3">{data?.area}</td>
                     <td className=" py-3">
                       <Menu
                         as="div"
@@ -108,6 +115,14 @@ const Index = () => {
                                 <Button
                                   text="Edit"
                                   className="block w-full text-left py-1.5 px-2.5 text-sm font-medium transition-all duration-300 text-litegray hover:text-secondry hover:bg-darkblue"
+                                  onClick={() => {
+                                    setEditMode({
+                                      status: true,
+                                      id: data?._id,
+                                    });
+                                    dispatch(setSupplierId(data));
+                                    setModalOpen(true);
+                                  }}
                                 />
                               </Menu.Item>
                               <Menu.Item>

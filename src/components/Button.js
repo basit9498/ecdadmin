@@ -1,8 +1,15 @@
 import React from "react";
 
-const Button = ({ text, className, img, onClick = () => {}, imgClass }) => {
+const Button = ({
+  type,
+  text,
+  className,
+  img,
+  onClick = () => {},
+  imgClass,
+}) => {
   return (
-    <button className={`${className} `} onClick={onClick}>
+    <button type={type} className={`${className} `} onClick={onClick}>
       <img src={img} className={imgClass} /> <span>{text}</span>
     </button>
   );
