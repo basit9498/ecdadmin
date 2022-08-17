@@ -11,28 +11,48 @@ import AddSuppier from "./AddSuppier";
 import GoogleMap from "./GoogleMap";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  deleteSuppier,
   getAllSupplier,
   setSupplierId,
+  supplierClearMessages,
 } from "../../store/action/supplier.action";
+import { getAllLoader } from "../../store/action/supplierLoader.action";
 
 const Index = () => {
   let navigate = useNavigate();
   const dispatch = useDispatch();
   const [supplier, setSupplier] = useState([]);
+  const [editMode, setEditMode] = useState({
+    status: false,
+    id: null,
+  });
   const [modalOpen, setModalOpen] = useState(false);
-  const { isLoading, supplierList } = useSelector((state) => state.supplier);
+  const { isLoading, supplierList, supplierSuccessMessage } = useSelector(
+    (state) => state.supplier
+  );
   useEffect(() => {
     dispatch(getAllSupplier());
+    dispatch(getAllLoader());
   }, []);
 
   useEffect(() => {
     setSupplier(supplierList);
   }, [supplierList]);
-
+  useEffect(() => {
+    if (supplierSuccessMessage == "SUPPLIER_DEL_SCCCESS") {
+      dispatch(getAllSupplier());
+      dispatch(supplierClearMessages());
+    }
+  }, [supplierSuccessMessage]);
   return (
     <>
       {/* ==============Add supplier Modal=========== */}
-      <AddSuppier modalOpen={modalOpen} modalHide={setModalOpen} />
+      <AddSuppier
+        modalOpen={modalOpen}
+        modalHide={setModalOpen}
+        editMode={editMode}
+        setEditMode={setEditMode}
+      />
       <Layout>
         <section className=" flex items-center justify-between">
           <Heading text="Supplier List" />
@@ -41,7 +61,7 @@ const Index = () => {
             onClick={() => {
               setModalOpen(true);
             }}
-            className="py-3 px-4 bg-primary text-secondry  rounded-md"
+            className="py-3 px-4 bg-primary text-white  rounded-md"
           />
         </section>
         <section className="mt-5">
@@ -49,7 +69,7 @@ const Index = () => {
             <thead>
               <th className=" pl-5">S.No</th>
               <th>Supplier</th>
-              <th>Address</th>
+              <th>Area</th>
               <th className=" pr-5">Action</th>
             </thead>
             <tbody>
@@ -57,10 +77,8 @@ const Index = () => {
                 return (
                   <tr className="rounded-md text-center boxShadow">
                     <td className=" py-3">{index + 1}</td>
-                    <td className=" py-3">{data.supplierName}</td>
-                    <td className=" py-3">
-                      {data.address + data.city + data.country}
-                    </td>
+                    <td className=" py-3">{data?.supplierName}</td>
+                    <td className=" py-3">{data?.area}</td>
                     <td className=" py-3">
                       <Menu
                         as="div"
@@ -86,8 +104,8 @@ const Index = () => {
                               <Menu.Item>
                                 <Button
                                   onClick={() => {
-                                    dispatch(setSupplierId(data._id));
-                                    // navigate("/supplierview");
+                                    dispatch(setSupplierId(data));
+                                    navigate("/supplierview");
                                   }}
                                   text="View"
                                   className="block w-full text-left py-1.5 px-2.5 text-sm font-medium transition-all duration-300 text-litegray hover:text-secondry hover:bg-darkblue"
@@ -97,12 +115,23 @@ const Index = () => {
                                 <Button
                                   text="Edit"
                                   className="block w-full text-left py-1.5 px-2.5 text-sm font-medium transition-all duration-300 text-litegray hover:text-secondry hover:bg-darkblue"
+                                  onClick={() => {
+                                    setEditMode({
+                                      status: true,
+                                      id: data?._id,
+                                    });
+                                    dispatch(setSupplierId(data));
+                                    setModalOpen(true);
+                                  }}
                                 />
                               </Menu.Item>
                               <Menu.Item>
                                 <Button
                                   text="Delete"
                                   className="block w-full text-left py-1.5 px-2.5 text-sm font-medium transition-all duration-300 text-litegray hover:text-secondry hover:bg-darkblue"
+                                  onClick={() => {
+                                    dispatch(deleteSuppier(data?._id));
+                                  }}
                                 />
                               </Menu.Item>
                             </div>
