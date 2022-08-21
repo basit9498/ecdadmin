@@ -14,7 +14,22 @@ const getAllLoader = () => {
     .catch((error) => error);
 };
 
+const deleteLoader = (id) => {
+  return httpServices
+    .get(`/loader/delete_loader/${id}`)
+    .then((data) => data)
+    .catch((error) => error);
+};
+
+const updateLoader = (id, data) => {
+  return httpServices
+    .put(`/loader/update_loader/${id}`, data)
+    .then((data) => data)
+    .catch((error) => error);
+};
 export default {
   addsupplierLoader,
   getAllLoader,
+  deleteLoader,
+  updateLoader,
 };

@@ -24,7 +24,6 @@ const Index = () => {
   const [supplier, setSupplier] = useState([]);
   const [editMode, setEditMode] = useState({
     status: false,
-    id: null,
   });
   const [modalOpen, setModalOpen] = useState(false);
   const { isLoading, supplierList, supplierSuccessMessage } = useSelector(
@@ -118,7 +117,6 @@ const Index = () => {
                                   onClick={() => {
                                     setEditMode({
                                       status: true,
-                                      id: data?._id,
                                     });
                                     dispatch(setSupplierId(data));
                                     setModalOpen(true);

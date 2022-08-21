@@ -7,19 +7,29 @@ import CaretDown from "../../../assets/img/caret-down.svg";
 import { Formik } from "formik";
 import {
   getAllLoader,
+  loaderRemoveData,
   supplierLoaderAdd,
+  updateLoader,
 } from "../../../store/action/supplierLoader.action";
 import { useDispatch, useSelector } from "react-redux";
 
-const AddLoader = ({ openModal, hideModal, callBack }) => {
+const AddLoader = ({
+  openModal,
+  hideModal,
+  callBack,
+  setEditMode,
+  editMode,
+}) => {
   const [suppliers, setSuppliers] = useState();
   const { supplierId } = useSelector((state) => state.supplier);
-  console.log("supp", supplierId);
+  const { loaderData } = useSelector((state) => state.loader);
+  // console.log("supp", supplierId);
   const dispatch = useDispatch();
 
   useEffect(() => {
     setSuppliers(supplierId);
   }, [suppliers]);
+
   return (
     <>
       <ModalBox open={openModal} hide={hideModal} className="w-[700px] p-6">
@@ -29,39 +39,77 @@ const AddLoader = ({ openModal, hideModal, callBack }) => {
             img={Cross}
             onClick={() => {
               hideModal(false);
+              dispatch(getAllLoader());
+              setEditMode(false);
+              dispatch(loaderRemoveData());
             }}
             imgClass="h-4"
           />
         </section>
         <Formik
           initialValues={{
-            fullName: "",
-            email: "",
+            fullName: editMode ? loaderData?.name : "",
+            email: editMode ? loaderData?.email : "",
             password: "",
-            contactNumber: "",
-            address: "",
-            vehicleReg: "",
-            selectType: "",
-            fiveKMPrice: "",
-            outOFiveKMPrice: "",
+            contactNumber: editMode ? loaderData?.contact : "",
+            address: editMode ? loaderData?.address : "",
+            vehicleReg: editMode ? loaderData?.registrationNumber : "",
+            selectType: editMode ? loaderData?.vch_type : "",
+            fiveKMPrice: editMode ? loaderData?.within_range : "",
+            outOFiveKMPrice: editMode ? loaderData?.out_range : "",
+            cnic: editMode ? loaderData?.cnic : "",
+            driver_license: editMode ? loaderData?.driver_license : "",
+            responsible_person_name: editMode
+              ? loaderData?.responsible_person?.name
+              : "",
+            responsible_person_cnic: editMode
+              ? loaderData?.responsible_person?.cnic
+              : "",
           }}
           onSubmit={(values) => {
-            console.log(values);
-            // const payload =
-            dispatch(
-              supplierLoaderAdd({
-                name: values.fullName,
-                email: values.email,
-                password: values.password,
-                address: values.address,
-                contact: values.contactNumber,
-                registrationNumber: values.vehicleReg,
-                supplier: suppliers?._id,
-                vch_type: values.selectType,
-                within_range: values.fiveKMPrice,
-                out_range: values.outOFiveKMPrice,
-              })
-            );
+            if (editMode) {
+              dispatch(
+                updateLoader(loaderData?._id, {
+                  name: values.fullName,
+                  email: values.email,
+                  address: values.address,
+                  contact: values.contactNumber,
+                  registrationNumber: values.vehicleReg,
+                  supplier: suppliers?._id,
+                  vch_type: values.selectType,
+                  within_range: values.fiveKMPrice,
+                  out_range: values.outOFiveKMPrice,
+                  cnic: values.cnic,
+                  driver_license: values.driver_license,
+                  responsible_person: {
+                    name: values.responsible_person_name,
+                    cnic: values.responsible_person_cnic,
+                  },
+                })
+              );
+            } else {
+              dispatch(
+                supplierLoaderAdd({
+                  name: values.fullName,
+                  email: values.email,
+                  password: values.password,
+                  address: values.address,
+                  contact: values.contactNumber,
+                  registrationNumber: values.vehicleReg,
+                  supplier: suppliers?._id,
+                  vch_type: values.selectType,
+                  within_range: values.fiveKMPrice,
+                  out_range: values.outOFiveKMPrice,
+                  cnic: values.cnic,
+                  driver_license: values.driver_license,
+                  responsible_person: {
+                    name: values.responsible_person_name,
+                    cnic: values.responsible_person_cnic,
+                  },
+                })
+              );
+            }
+
             // This For Just Temporty
           }}
         >
@@ -96,14 +144,29 @@ const AddLoader = ({ openModal, hideModal, callBack }) => {
               </div>
               <div className=" w-[300px] mb-4">
                 <input
-                  value={values.password}
-                  onChange={handleChange("password")}
-                  onBlur={handleBlur("password")}
-                  type="password"
+                  value={values.cnic}
+                  onChange={handleChange("cnic")}
+                  onBlur={handleBlur("cnic")}
+                  type="text"
                   className="h-11 border text-sm w-full pl-2"
-                  placeholder="Password"
+                  placeholder="CNIC"
                 />
               </div>
+              {!editMode && (
+                <>
+                  <div className=" w-[300px] mb-4">
+                    <input
+                      value={values.password}
+                      onChange={handleChange("password")}
+                      onBlur={handleBlur("password")}
+                      type="password"
+                      className="h-11 border text-sm w-full pl-2"
+                      placeholder="Password"
+                    />
+                  </div>
+                </>
+              )}
+
               <div className=" w-[300px] mb-4">
                 <input
                   value={values.contactNumber}
@@ -111,7 +174,7 @@ const AddLoader = ({ openModal, hideModal, callBack }) => {
                   onBlur={handleBlur("contactNumber")}
                   type="text"
                   className="h-11 border text-sm w-full pl-2"
-                  placeholder="Contect number"
+                  placeholder="Contact Number"
                 />
               </div>
               <div className=" w-[300px] mb-4">
@@ -134,6 +197,16 @@ const AddLoader = ({ openModal, hideModal, callBack }) => {
                   placeholder="Vehicle Reg.No"
                 />
               </div>
+              <div className=" w-[300px] mb-4">
+                <input
+                  value={values.driver_license}
+                  onChange={handleChange("driver_license")}
+                  onBlur={handleBlur("driver_license")}
+                  type="text"
+                  className="h-11 border text-sm w-full pl-2"
+                  placeholder="Driver License No"
+                />
+              </div>
               <div className=" w-[300px] mb-4 relative">
                 <select
                   value={values.selectType}
@@ -142,8 +215,8 @@ const AddLoader = ({ openModal, hideModal, callBack }) => {
                   className="h-11 border text-sm w-full pl-2"
                 >
                   <option>select type</option>
-                  <option value="car">Car</option>
-                  <option value="truck">Truck</option>
+                  <option value="Car">Car</option>
+                  <option value="Truck">Truck</option>
                 </select>
                 <img src={CaretDown} className="absolute top-5 right-3" />
               </div>
@@ -166,6 +239,33 @@ const AddLoader = ({ openModal, hideModal, callBack }) => {
                   className="h-11 border text-sm w-full pl-2"
                   placeholder="Out of 5-KM price"
                 />
+              </div>
+              <div className="w-full">
+                <div className="mb-2">
+                  <h6>Responsible Person Detail</h6>
+                </div>
+                <div className="flex justify-between">
+                  <div className=" w-[300px] mb-4">
+                    <input
+                      value={values.responsible_person_name}
+                      onChange={handleChange("responsible_person_name")}
+                      onBlur={handleBlur("responsible_person_name")}
+                      type="text"
+                      className="h-11 border text-sm w-full pl-2"
+                      placeholder="Name"
+                    />
+                  </div>
+                  <div className=" w-[300px] mb-4">
+                    <input
+                      value={values.responsible_person_cnic}
+                      onChange={handleChange("responsible_person_cnic")}
+                      onBlur={handleBlur("responsible_person_cnic")}
+                      type="text"
+                      className="h-11 border text-sm w-full pl-2"
+                      placeholder="CNIC"
+                    />
+                  </div>
+                </div>
               </div>
               <div className="w-full mb-4">
                 <Button

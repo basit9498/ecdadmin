@@ -4,32 +4,46 @@ import { Menu, Transition } from "@headlessui/react";
 import Dots from "../../../assets/img/dots.svg";
 import AddLoader from "./AddLoader";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllLoader } from "../../../store/action/supplierLoader.action";
+import {
+  clearLoaderMessage,
+  deleteLoader,
+  getAllLoader,
+  loaderSetData,
+} from "../../../store/action/supplierLoader.action";
 
 const Loader = ({ modalOpen, modalHide }) => {
   const dispatch = useDispatch();
   const { supplierId } = useSelector((state) => state.supplier);
-  const { loaderList } = useSelector((state) => state.loader);
+  const { loaderList, successMessage } = useSelector((state) => state.loader);
   const [supplierLoader, setSupplierLoader] = useState([]);
+  const [editMode, setEditMode] = useState(false);
   useEffect(() => {
     setSupplierLoader(
       loaderList?.filter((item) => item?.supplier == supplierId?._id)
     );
   }, [loaderList]);
-  //   useEffect(() => {
-  //     dispatch(getAllLoader());
-  //   }, [modalOpen]);
+  useEffect(() => {
+    if (successMessage == "LOADER_DELETE_SCCUESS") {
+      dispatch(getAllLoader());
+      dispatch(clearLoaderMessage());
+    }
+  }, [successMessage]);
   return (
     <>
       {/* =============Add Loader Modal Box================== */}
-      <AddLoader openModal={modalOpen} hideModal={modalHide} />
-      <Button
+      <AddLoader
+        openModal={modalOpen}
+        hideModal={modalHide}
+        setEditMode={setEditMode}
+        editMode={editMode}
+      />
+      {/* <Button
         className={"bg-black text-white p-3"}
         text="Reload"
         onClick={() => {
           dispatch(getAllLoader());
         }}
-      />
+      /> */}
       <section className="mt-6">
         <table className="table w-full border-separate rounded-sm organization__table">
           <thead>
@@ -70,12 +84,20 @@ const Loader = ({ modalOpen, modalHide }) => {
                               <Button
                                 text="Edit"
                                 className="block w-full text-left py-1.5 px-2.5 text-sm font-medium transition-all duration-300 text-litegray hover:text-secondry hover:bg-darkblue"
+                                onClick={() => {
+                                  dispatch(loaderSetData(data));
+                                  setEditMode(true);
+                                  modalHide(true);
+                                }}
                               />
                             </Menu.Item>
                             <Menu.Item>
                               <Button
                                 text="Delete"
                                 className="block w-full text-left py-1.5 px-2.5 text-sm font-medium transition-all duration-300 text-litegray hover:text-secondry hover:bg-darkblue"
+                                onClick={() => {
+                                  dispatch(deleteLoader(data?._id));
+                                }}
                               />
                             </Menu.Item>
                           </div>

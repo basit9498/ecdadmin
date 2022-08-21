@@ -6,6 +6,8 @@ import AddProduct from "./AddProduct";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getSupplierProduct,
+  productRemoveData,
+  productSetData,
   supplierProductDelete,
   supplierProjectClearMessages,
 } from "../../../store/action/supplierProduct.action";
@@ -26,21 +28,34 @@ const Product = ({ modalOpen, modalHide }) => {
   }, [supplierProductList]);
 
   useEffect(() => {
-    if (successMessage == "SUPPLIER_PRODUCT_DEL_SCCCESS") {
+    if (
+      successMessage == "SUPPLIER_PRODUCT_DEL_SCCCESS" ||
+      successMessage == "SUPPLIER_PRODUCT_ADD_SUCCESS"
+    ) {
       dispatch(getSupplierProduct(state.supplierId._id));
       dispatch(supplierProjectClearMessages());
+    } else if (successMessage == "SUPPLIER_PRODUCT_UPDATE_SUCCESS") {
+      dispatch(getSupplierProduct(state.supplierId._id));
+      dispatch(supplierProjectClearMessages());
+      dispatch(productRemoveData());
     }
   }, [successMessage]);
+  const [editMode, setEditMode] = useState(false);
   return (
     <>
-      <AddProduct openModal={modalOpen} hideModal={modalHide} />
+      <AddProduct
+        openModal={modalOpen}
+        hideModal={modalHide}
+        editMode={editMode}
+        setEditMode={setEditMode}
+      />
 
       <section className="mt-6">
         <table className="table w-full border-separate rounded-sm organization__table">
           <thead>
             <th className=" pl-5">S.No</th>
             <th>Product Name</th>
-            <th>Qauntity</th>
+
             <th>Stock</th>
             <th>category</th>
             <th>Price</th>
@@ -59,7 +74,7 @@ const Product = ({ modalOpen, modalHide }) => {
                     />
                     <span>{ele?.name}</span>
                   </td>
-                  <td className=" py-3">Qauntity</td>
+
                   <td className=" py-3">{ele?.Stock}</td>
                   <td className=" py-3">{ele?.category}</td>
                   <td className=" py-3">{ele?.price}</td>
@@ -86,6 +101,11 @@ const Product = ({ modalOpen, modalHide }) => {
                               <Button
                                 text="Edit"
                                 className="block w-full text-left py-1.5 px-2.5 text-sm font-medium transition-all duration-300 text-litegray hover:text-secondry hover:bg-darkblue"
+                                onClick={() => {
+                                  dispatch(productSetData(ele));
+                                  setEditMode(true);
+                                  modalHide(true);
+                                }}
                               />
                             </Menu.Item>
                             <Menu.Item>

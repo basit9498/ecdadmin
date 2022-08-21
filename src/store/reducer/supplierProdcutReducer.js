@@ -9,6 +9,9 @@ import {
   SUPPLIER_PRODUCT_DEL_SCCCESS,
   SUPPLIER_PRODUCT_DEL_FAIL,
   SUPPLIER_PRODUCT_CLEAR_MESSAGES,
+  SUPPLIER_PRODUCT_DATA_SET,
+  SUPPLIER_PRODUCT_DATA_REMOVE,
+  SUPPLIER_PRODUCT_UPDATE_SUCCESS,
 } from "../constant";
 
 const initalState = {
@@ -16,6 +19,7 @@ const initalState = {
   supplierProductList: [],
   successMessage: null,
   errorMessage: null,
+  productData: null,
 };
 const supplierProdcutReducer = (state = initalState, action) => {
   switch (action.type) {
@@ -30,9 +34,9 @@ const supplierProdcutReducer = (state = initalState, action) => {
       return {
         ...state,
         isloading: false,
-        successMessage: "action.successMessage",
+        successMessage: "SUPPLIER_PRODUCT_ADD_SUCCESS",
         errorMessage: null,
-        supplierProductList: [...state.supplierProductList],
+        // supplierProductList: [...state.supplierProductList],
       };
     case SUPPLIER_PRODUCT_ADD_FAIL:
       return {
@@ -84,6 +88,25 @@ const supplierProdcutReducer = (state = initalState, action) => {
         isloading: false,
         successMessage: null,
         errorMessage: "SUPPLIER_PRODUCT_DEL_FAIL",
+      };
+
+    // Prodcut Data Set
+    case SUPPLIER_PRODUCT_DATA_SET:
+      return {
+        ...state,
+        productData: action.payload,
+      };
+    case SUPPLIER_PRODUCT_DATA_REMOVE:
+      return {
+        ...state,
+        productData: null,
+      };
+
+    // Update Product
+    case SUPPLIER_PRODUCT_UPDATE_SUCCESS:
+      return {
+        ...state,
+        successMessage: "SUPPLIER_PRODUCT_UPDATE_SUCCESS",
       };
 
     // Clear Message

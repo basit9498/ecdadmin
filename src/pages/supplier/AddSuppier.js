@@ -67,7 +67,6 @@ const AddSuppier = ({ modalOpen, modalHide, editMode, setEditMode }) => {
               modalHide(false);
               setEditMode({
                 status: false,
-                id: null,
               });
               dispatch(removeSupplierId());
               dispatch(getAllSupplier());

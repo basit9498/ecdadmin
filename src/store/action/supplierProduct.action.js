@@ -10,6 +10,9 @@ import {
   SUPPLIER_PRODUCT_DEL_SCCCESS,
   SUPPLIER_PRODUCT_DEL_FAIL,
   SUPPLIER_PRODUCT_CLEAR_MESSAGES,
+  SUPPLIER_PRODUCT_DATA_SET,
+  SUPPLIER_PRODUCT_DATA_REMOVE,
+  SUPPLIER_PRODUCT_UPDATE_SUCCESS,
 } from "../constant";
 
 export const addSupplierProduct = (data) => async (dispatch) => {
@@ -21,7 +24,7 @@ export const addSupplierProduct = (data) => async (dispatch) => {
     if (response?.data.success === true) {
       dispatch({
         type: SUPPLIER_PRODUCT_ADD_SUCCESS,
-        successMessage: response?.data.message,
+        // successMessage: response?.data.message,
         payload: response?.data,
       });
     } else {
@@ -92,4 +95,26 @@ export const supplierProjectClearMessages = () => {
   return {
     type: SUPPLIER_PRODUCT_CLEAR_MESSAGES,
   };
+};
+
+export const productSetData = (data) => {
+  return {
+    type: SUPPLIER_PRODUCT_DATA_SET,
+    payload: data,
+  };
+};
+
+export const productRemoveData = () => {
+  return {
+    type: SUPPLIER_PRODUCT_DATA_REMOVE,
+  };
+};
+
+export const supplierProductUpdate = (id, data) => async (dispatch) => {
+  const response = await supplierProductService.supplierProductUpdate(id, data);
+  if (response.data.success == true) {
+    dispatch({
+      type: SUPPLIER_PRODUCT_UPDATE_SUCCESS,
+    });
+  }
 };

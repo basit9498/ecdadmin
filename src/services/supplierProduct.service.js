@@ -22,9 +22,16 @@ const supplierProductDelete = (id) => {
     .then((data) => data)
     .catch((error) => error);
 };
+const supplierProductUpdate = (id, data) => {
+  return httpServices
+    .put(`/product/${id}`, data)
+    .then((data) => data)
+    .catch((error) => error);
+};
 
 export default {
   supplierProductAdd,
   supplierProductList,
   supplierProductDelete,
+  supplierProductUpdate,
 };
