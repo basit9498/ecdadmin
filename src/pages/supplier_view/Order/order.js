@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   getOrderSupplier,
   loaderAssignRedxSetData,
+  verifyOrderPayment,
 } from "../../../store/action/order.action";
 import ModalBox from "../../../components/ModalBox";
 import orderService from "../../../services/order.service";
@@ -140,6 +141,9 @@ const Order = () => {
                                     <Button
                                       text="Verify Payment"
                                       className="block w-full text-left py-1.5 px-2.5 text-sm font-medium transition-all duration-300 text-litegray hover:text-secondry hover:bg-darkblue"
+                                      onClick={() => {
+                                        dispatch(verifyOrderPayment(order._id));
+                                      }}
                                     />
                                   </Menu.Item>
                                 )}

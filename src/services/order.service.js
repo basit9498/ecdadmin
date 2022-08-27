@@ -14,7 +14,14 @@ const setOrderLoaderPick = (orderLoaderData) => {
     .then((data) => data)
     .catch((err) => err);
 };
+const verifyOrderPayment = (orderid) => {
+  return httpService
+    .put(`/supplier/update_status_order/${orderid}`)
+    .then((data) => data)
+    .catch((err) => err);
+};
 export default {
   getOrderSupplier,
   setOrderLoaderPick,
+  verifyOrderPayment,
 };

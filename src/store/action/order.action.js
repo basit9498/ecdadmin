@@ -5,6 +5,7 @@ import {
   ORDER_SUPPLIER_GET_REQUEST,
   ORDER_SUPPLIER_GET_SCCUESS,
   ORDER_SUPPLIER_LOADER_ASSIGN_SET,
+  ORDER_VERIFY_PAYMENT,
 } from "../constant";
 
 export const getOrderSupplier = (id) => async (dispatch) => {
@@ -30,6 +31,22 @@ export const getOrderSupplier = (id) => async (dispatch) => {
       type: ORDER_SUPPLIER_GET_FAIL,
       payload: "NETWORK_ERROR",
     });
+  }
+};
+
+export const verifyOrderPayment = (id) => async (dispatch) => {
+  try {
+    const response = await orderService.verifyOrderPayment(id);
+    if (response.data.success == true) {
+      dispatch({
+        type: ORDER_VERIFY_PAYMENT,
+        payload: id,
+      });
+    } else {
+      alert(response.data.message);
+    }
+  } catch (e) {
+    alert("NETWORK_ERROR");
   }
 };
 

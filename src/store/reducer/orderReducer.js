@@ -5,6 +5,7 @@ import {
   ORDER_SUPPLIER_GET_SCCUESS,
   ORDER_SUPPLIER_LOADER_ASSIGN_REMOVE,
   ORDER_SUPPLIER_LOADER_ASSIGN_SET,
+  ORDER_VERIFY_PAYMENT,
 } from "../constant";
 
 const initalState = {
@@ -53,6 +54,17 @@ const orderReducer = (state = initalState, action) => {
         ...state,
         isloading: false,
         orderAssign: null,
+      };
+    case ORDER_VERIFY_PAYMENT:
+      const updateOrders = state.orderSupplier?.map((data) => {
+        if (data._id == action.payload) {
+          data.paymentInfo.payment_verify = "DONE";
+        }
+        return data;
+      });
+      return {
+        ...state,
+        orderSupplier: updateOrders,
       };
     // Clear Message
     case ORDER_CLEAR_MESSAGES:
